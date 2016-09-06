@@ -21,7 +21,7 @@ public class InputOperatonsImpl implements InputOperations {
 		br = new BufferedReader(new InputStreamReader(System.in));
 	}
 	
-	public String[] getInputParameters() throws CanvasException
+	public String[] getInputParameters() throws DrawingException
 	{
 		String input = null;
 		try {
@@ -36,7 +36,7 @@ public class InputOperatonsImpl implements InputOperations {
 		{
 			return params;
 		}
-		throw new CanvasException("Input valid commands");
+		throw new DrawingException("Input valid commands");
 		
 		
 	}

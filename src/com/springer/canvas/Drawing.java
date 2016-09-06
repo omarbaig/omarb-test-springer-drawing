@@ -10,15 +10,23 @@ package com.springer.canvas;
 public class Drawing {
 
 	private InputOperations operations;
+	
+	private Canvas canvas = null;
 
 	public Drawing(InputOperations operations) {
 		this.operations = operations;
 	}
 
-	public void makeDrawing() throws CanvasException {
+	public void makeDrawing() throws DrawingException {
 		String[] inputParams = operations.getInputParameters();
-		getCommandType(inputParams);
+		setCommandType(inputParams);
+		paintDrawing();
 
+	}
+
+	private void paintDrawing() {
+		canvas.paint();
+		
 	}
 
 	/**
@@ -27,34 +35,62 @@ public class Drawing {
 	 * 
 	 * @param inputParams
 	 * @return
-	 * @throws CanvasException 
+	 * @throws DrawingException 
 	 */
-	private void getCommandType(String[] inputParams) throws CanvasException {
+	private void setCommandType(String[] inputParams) throws DrawingException {
 		InputCommands command = null;
 		try{
 			command = InputCommands.valueOf(inputParams[0]);
 		}
 		catch(IllegalArgumentException ex)
 		{
-			throw new CanvasException(inputParams[0] + " is an invalid command ", ex);
+			throw new DrawingException(inputParams[0] + " is an invalid command ", ex);
 		}
 		switch (command) {
 		case C:
-			if(validateArgumentCount(command, inputParams, 2));
-				drawCanvas(inputParams);
+			if(getCanvas() == null){
+				if(validateArgumentCount(command, inputParams, 2));
+					setCanvas(buildCanvas(inputParams));
+
+			}else {
+				throw new DrawingException("Canvas has already been created");
+			}
 			break;
 		default:
-			throw new CanvasException("Comand not found");
+			throw new DrawingException("Comand not found");
 
 		}
 	}
 
-	private void drawCanvas(String[] inputParams) {
-		// TODO Auto-generated method stub
+	private Canvas buildCanvas(String[] inputParams) throws DrawingException {
+		return new Canvas(getInt(inputParams[1]), getInt(inputParams[2]));
 		
 	}
 
-	private boolean validateArgumentCount(InputCommands commandType, String[] inputParams, int argumentCount) throws CanvasException {
+	/**
+	 * Converts String to int
+	 * @param stringParam
+	 * @return
+	 * @throws DrawingException
+	 */
+	private int getInt(String stringParam) throws DrawingException{
+		try{
+			return Integer.valueOf(stringParam).intValue();
+		}
+		catch(NumberFormatException ex){
+			throw new DrawingException("Parameter is invalid: " + ex);
+		}
+	}
+
+	/**
+	 * Validates the input parameters count associated with the command
+	 * @param commandType
+	 * @param inputParams
+	 * @param argumentCount
+	 * @return boolean
+	 * @throws DrawingException
+	 */
+	private boolean validateArgumentCount(InputCommands commandType, String[] inputParams, int argumentCount) throws DrawingException {
 		boolean isValid = false;
 		if(argumentCount ==inputParams.length-1)
 		{
@@ -62,9 +98,17 @@ public class Drawing {
 		}
 		else
 		{
-			throw new CanvasException(commandType.getInput() + " does not have the required " + argumentCount + "arguments");
+			throw new DrawingException(commandType.getInput() + " does not have the required " + argumentCount + "arguments");
 		}
 		return isValid;
 		
+	}
+
+	public void setCanvas(Canvas canvas) {
+		this.canvas = canvas;
+	}
+
+	public Canvas getCanvas() {
+		return canvas;
 	}
 }
