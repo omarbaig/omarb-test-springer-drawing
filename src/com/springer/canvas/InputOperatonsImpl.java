@@ -24,13 +24,22 @@ public class InputOperatonsImpl implements InputOperations {
 	public String[] getInputParameters() throws DrawingException
 	{
 		String input = null;
-		try {
-			input = br.readLine().trim();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String[] params = null;
+		try{
+			while(br.ready()){
+				try {
+					input = br.readLine().trim();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-		String[] params = input.split(" ");
+		catch(IOException e)
+		{
+			throw new DrawingException("Error reading in input parameters");
+		}
+		
+		params = input.split(" ");
 
 		if(params!=null && params.length>0)
 		{
@@ -40,14 +49,4 @@ public class InputOperatonsImpl implements InputOperations {
 		
 		
 	}
-	
-	
-
-	public void drawCanvas(){
-		String input = "";
-		
-		
-	}
-
-
 }
