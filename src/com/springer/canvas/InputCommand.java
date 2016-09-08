@@ -8,15 +8,19 @@ package com.springer.canvas;
  * @author Omar
  * 
  */
-public enum InputCommands {
-	C ("CANVAS",2), L("LINE",4), R("RECTANGLE",4), B("BUCKET_COLOUR",3), Q("QUIT",0);
+public enum InputCommand {
+	C ("CANVAS",2), Q ("QUIT",0);//, L("LINE",4, new LineBuilder()), R("RECTANGLE",4, new RectangleBuilder()), B("BUCKET_COLOUR",3, new CanvasBuilder(true)), Q("QUIT",0,null);
 
 	String input = "";
 	int argumentCount = 0;
-	private InputCommands(String command, int args) {
+	ShapeBuilder shapeBuilder = null;
+	
+	private InputCommand(String command, int argumentCount) {
 		this.input = command;
-		this.argumentCount= args;
+		this.argumentCount= argumentCount;
 	}
+
+
 
 	public String getInput() {
 		return input;
@@ -33,5 +37,4 @@ public enum InputCommands {
 	public void setArgumentCount(int argumentCount) {
 		this.argumentCount = argumentCount;
 	}
-
 }

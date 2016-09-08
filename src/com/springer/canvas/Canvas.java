@@ -11,24 +11,21 @@ public class Canvas {
 	
 	private int width;
 	private int height;
-	private String[][] canvasBoundary;
-	private PrintOperations operations;
+	private boolean hasFill = false;
+	
+	//private PrintOperations operations;
 	
 	
 	public Canvas(int width, int height) throws DrawingException {
-		if(width == 2 || height == 2){
-			// On a canvas of 2 x 2, there is no space for shapes, hence exception thrown  
-			throw new DrawingException("Canvas has to have a width or heigth greater than 0");
-		}
 		this.width = width;
 		this.height = height;
 	}
 	
-	public Canvas(PrintOperations operations, int width, int height) throws DrawingException {
-		this(width,height);
-		this.operations = operations;
-		
-	}
+//	public Canvas(PrintOperations operations, int width, int height) throws DrawingException {
+//		this(width,height);
+//		this.operations = operations;
+//		
+//	}
 
 	private List<Shape> shapes = null;
 	
@@ -54,103 +51,115 @@ public class Canvas {
 	/**
 	 * Paints Canvas in console -- requires rethink
 	 */
-	public void paint() {
-		
-		setCanvasBoundary(buildBoundaries());
-		
-		if(shapes == null){
-			// 
-		}
-		
-		// convert to one dimensional array
-		operations.print(buildLineArray());
-		
-	}
+//	public void paint() {
+//		
+//		setCanvasBoundary(buildBoundaries());
+//		
+//		if(shapes == null){
+//			// 
+//		}
+//		
+//		// convert to one dimensional array
+//		operations.print(buildLineArray());
+//		
+//	}
 	
-	private  String[][] buildBoundaries(){
-		String[][] boundary = new String[height][width];
-		
-		for(int i= 0; i < height; i++){
-			for(int j = 0; j < width; j++)
-			{
-				if(i==0 || i==height-1)
-				{
-					boundary[i][j] = "-";
-				}
-				else
-				{
-					if(j==0 || j==width-1)
-					{
-						boundary[i][j] = "|";
-					}
-					else
-					{
-						boundary[i][j] = " ";
-					}
-				}
-			}
-		}
-		return boundary;
-	}
+//	private  String[][] buildBoundaries(){
+//		String[][] boundary = new String[height][width];
+//		
+//		for(int i= 0; i < height; i++){
+//			for(int j = 0; j < width; j++)
+//			{
+//				if(i==0 || i==height-1)
+//				{
+//					boundary[i][j] = "-";
+//				}
+//				else
+//				{
+//					if(j==0 || j==width-1)
+//					{
+//						boundary[i][j] = "|";
+//					}
+//					else
+//					{
+//						boundary[i][j] = " ";
+//					}
+//				}
+//			}
+//		}
+//		return boundary;
+//	}
 	
-	private String[] buildLineArray() {
-		String[][] rawCanvas = getCanvasBoundary();
-		String[] canvasLines = new String[height];
-		
-		for(int i = 0; i < height; i++)
-		{
-			canvasLines[i] = buildLine(rawCanvas[i], width);
-			
-		}
-		return canvasLines;
-	}
+//	private String[] buildLineArray() {
+//		String[][] rawCanvas = getCanvasBoundary();
+//		String[] canvasLines = new String[height];
+//		
+//		for(int i = 0; i < height; i++)
+//		{
+//			canvasLines[i] = buildLine(rawCanvas[i], width);
+//			
+//		}
+//		return canvasLines;
+//	}
 	
 	
-	private String buildLine(String[] rawCanvas, int width) {
-		StringBuilder builder = new StringBuilder();
-		for(int j = 0; j < width; j++)
-		{
-			builder.append(rawCanvas[j]);
-		}
-		return builder.toString();
-	}
+//	private String buildLine(String[] rawCanvas, int width) {
+//		StringBuilder builder = new StringBuilder();
+//		for(int j = 0; j < width; j++)
+//		{
+//			builder.append(rawCanvas[j]);
+//		}
+//		return builder.toString();
+//	}
 	/**
 	 * Constructs the boundaries as lines of text 
 	 * @param width
 	 * @param isTopOrBottomWall
 	 * @return
 	 */
-	private String buildLines(int width, boolean isTopOrBottomWall) {
-		StringBuilder builder = new StringBuilder();
-		for(int i = 0; i < width; i++)
-		{
-			if(isTopOrBottomWall)
-			{
-				builder.append("_");
-			}
-			else
-			{
-				if(i==0 || i== width-1)
-				{
-					builder.append("|");
-				}
-				else
-				{
-					builder.append(" ");
-				}
-				
-			}
-			
-			
-		}
-		return builder.toString();
+//	private String buildLines(int width, boolean isTopOrBottomWall) {
+//		StringBuilder builder = new StringBuilder();
+//		for(int i = 0; i < width; i++)
+//		{
+//			if(isTopOrBottomWall)
+//			{
+//				builder.append("_");
+//			}
+//			else
+//			{
+//				if(i==0 || i== width-1)
+//				{
+//					builder.append("|");
+//				}
+//				else
+//				{
+//					builder.append(" ");
+//				}
+//				
+//			}
+//			
+//			
+//		}
+//		return builder.toString();
+//	}
+	
+
+	
+	/**
+	 * Adds fill boolean marker
+	 */
+	public void addFill() {
+		hasFill = true;
+		
 	}
-	public void setCanvasBoundary(String[][] canvasBoundary) {
-		this.canvasBoundary = canvasBoundary;
-	}
-	public String[][] getCanvasBoundary() {
-		return canvasBoundary;
-	}
+
+//	public boolean setHasFill(int hasFill) {
+//		this.hasFill = hasFill;
+//	}
+//
+//	public boolean getHasFill() {
+//		return hasFill;
+//	}
 	
 	
 	
